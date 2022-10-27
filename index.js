@@ -2,12 +2,13 @@ require("dotenv").config();
 require("./database/index");
 const PORT = process.env.PORT || 8000;
 const express = require("express");
-const  multer   =  require ( 'multer' ) 
-const  upload  =  multer ( {  dest : 'uploads/'  } )
 const app = express();
+const cors = require("cors");
+const config = require("./config/config")
 const routeReport = require("./routes/routeReport");
 
-app.use(express.json());
+app.use(cors(config.cors));
+app.use(express.urlencoded({extended: true}));
 app.use("/report", routeReport);
 
 app.listen(PORT, () => {

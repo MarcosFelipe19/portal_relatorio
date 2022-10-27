@@ -14,7 +14,8 @@ class Relatorio extends Model {
             senha: DataTypes.STRING(),
             data_criacao: DataTypes.DATE,
             responsavel: DataTypes.STRING,
-            ativo: DataTypes.INTEGER
+            ativo: DataTypes.INTEGER,
+            link_relatorio: DataTypes.STRING,
         }, {
             sequelize,
             tableName: "portal_acessos"
