@@ -1,27 +1,24 @@
 const search = require('./controllerSearch');
-const Relatorio = require('../mondels/Relatorio');
-const PortalLog = require('../mondels/PortalLog');
-const date = new Date();
-let data_criacao = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + " " + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds();
-
-
+const portalrelatorio = require("./controllersPortalRelatorio");
+const Relatorio = require('../models/Relatorio');
+const PortalLog = require('../models/PortalLog');
+const date = require('./date');
+const { Sequelize } = require('sequelize');
+const data_criacao = date.date_time;
 const prop = {
     async novoRelatorio(req, res) {
-
         if (!req.body.orcamento && !req.body.responsavel) {
-            return res.status(400).json({"msg":"Error, Campos vazios não são permitidos!"});
+            return res.status(400).json({ "msg": "Error, Campos vazios não são permitidos!" });
         }
 
         let result = "";
         try {
             result = await search.bucarProposta(req.body.orcamento);
-           
         } catch (e) {
-            return res.status(400)({"msg":"Error ao buscar o relatório!"});
+            return res.status(400)({ "msg": "Error ao buscar o relatório!" });
         }
 
         try {
-            console.log(result);
             var relatorio = await Relatorio.create({
                 orcamento: req.body.orcamento,
                 token: result.token,
@@ -32,29 +29,45 @@ const prop = {
                 link_relatorio: req.file.location
             })
         } catch (error) {
-            return res.status(400).json({"msg":"Error, não foi possível cadastrar o relatório"});
+            return res.status(400).json({ "msg": "Error, não foi possível cadastrar o relatório" });
         }
 
-        let sucesso = await logReltorio(result, req.body.responsavel, relatorio.id)
-        
-        if(sucesso == false){
-            return res.status(400).json({"msg": "Refazer upload"});
+        let sucesso = await logReltorio(result, req.body.responsavel, relatorio.id);
+
+        if (!sucesso) {
+            return res.status(400).json({ "msg": "Refazer upload, log" });
         }
 
-        res.send({"msg":"Relatório cadastrado com sucesso"});
+        sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, req.body.upload_vencimento);
+
+        if (!sucesso) {
+            return res.status(400).json({ "msg": "Refazer upload" });
+        }
+
+        res.send({ "msg": "Relatório cadastrado com sucesso" });
     },
     async buscarRelatorio(req, res) {
         if (req.body.token && req.body.senha) {
+
             try {
                 let relatorio = await Relatorio.findOne({
                     where: {
                         token: req.body.token,
-                        senha: req.body.senha
+                        senha: req.body.senha,
                     }
                 })
-                return res.json(relatorio)
+                if (relatorio) {
+                    let sucesso = await portalrelatorio.data_vencimento(relatorio.orcamento);
+                    if (sucesso) {
+                        return res.status(200).json(relatorio)
+                    } else {
+                        return res.status(400).send("Não foi possível fazer a busca!");
+                    }
+                } else {
+                    return res.status(400).send("Não tem relatório!");
+                }
             } catch (e) {
-                return res.status(404).send("Não foi possível fazer a busca!");
+                return res.status(400).send("Não foi possível fazer a busca!");
             }
         }
     },
@@ -74,6 +87,7 @@ async function logReltorio(values, responsavel, id) {
     } catch (e) {
         return false;
     }
+    return true;
 }
 
 module.exports = prop;

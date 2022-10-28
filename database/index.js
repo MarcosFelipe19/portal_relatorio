@@ -2,10 +2,10 @@ const Sequelize = require('sequelize');
 const dbConfig = require('../config/database');
 const dbConfigU83TI = require('../config/databaseU83TI');
 
-const Proposta = require('../mondels/Proposta');
-const Relatorio = require('../mondels/Relatorio');
-const PortalLog = require('../mondels/PortalLog');
-const PortalRelatorio = require('../mondels/PortalRelatorio');
+const Proposta = require('../models/Proposta');
+const Relatorio = require('../models/Relatorio');
+const PortalLog = require('../models/PortalLog');
+const PortalRelatorio = require('../models/PortalRelatorio');
 
 const connection = new Sequelize(dbConfig);
 const connectionU83TI = new Sequelize(dbConfigU83TI);
