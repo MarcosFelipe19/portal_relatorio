@@ -69,7 +69,7 @@ const prop = {
             }
         }
     },
-    async getall(){
+    async getall(req, res){
         try {
           let relatorio = await Relatorio.findAll();
           res.json(relatorio);  
