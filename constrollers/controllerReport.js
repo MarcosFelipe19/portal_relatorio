@@ -7,7 +7,7 @@ const { Sequelize } = require('sequelize');
 const data_criacao = date.date_time;
 const prop = {
     async novoRelatorio(req, res) {
-        if (!req.body.orcamento && !req.body.responsavel) {
+        if (!req.file && !req.body.orcamento && !req.body.responsavel) {
             return res.status(400).json({ "msg": "Error, Campos vazios não são permitidos!" });
         }
 
@@ -35,42 +35,56 @@ const prop = {
         let sucesso = await logReltorio(result, req.body.responsavel, relatorio.id);
 
         if (!sucesso) {
-            return res.status(400).json({ "msg": "Refazer upload, log" });
+            return res.status(400).json({ "msg": "Refazer upload, para cadastrar o vencimento" });
         }
 
         sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, req.body.upload_vencimento);
 
         if (!sucesso) {
-            return res.status(400).json({ "msg": "Refazer upload" });
+            return res.status(400).json({ "msg": "Refazer upload, para cadastrar o vencimento" });
         }
 
         res.send({ "msg": "Relatório cadastrado com sucesso" });
     },
-    async buscarRelatorio(req, res) {
+    async getOne(req, res) {
         if (req.body.token && req.body.senha) {
-
+            let relatorio = "";
             try {
-                let relatorio = await Relatorio.findOne({
+                relatorio = await Relatorio.findOne({
                     where: {
                         token: req.body.token,
                         senha: req.body.senha,
                     }
                 })
-                if (relatorio) {
-                    let sucesso = await portalrelatorio.data_vencimento(relatorio.orcamento);
-                    if (sucesso) {
-                        return res.status(200).json(relatorio)
-                    } else {
-                        return res.status(400).send("Não foi possível fazer a busca!");
-                    }
-                } else {
-                    return res.status(400).send("Não tem relatório!");
-                }
             } catch (e) {
+                return res.status(400).send("Não foi possível fazer a busca!");
+            }
+            if(relatorio){
+                let sucesso = await portalrelatorio.data_vencimento(relatorio.orcamento);
+                if(sucesso){
+                    return res.json(relatorio)
+                }
+            }else{
                 return res.status(400).send("Não foi possível fazer a busca!");
             }
         }
     },
+    async getall(){
+        try {
+          let relatorio = await Relatorio.findAll();
+          res.json(relatorio);  
+        } catch (error) {
+            res.send("Não foi possível fazer a busca os relatórios!");
+        }
+    },
+    async upload_vencimento(req, res){
+        sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, req.body.upload_vencimento);
+
+        if (!sucesso) {
+            return res.status(400).json({ "msg": "Refazer upload, para cadastrar o vencimento" });
+        }
+        res.send('Su')
+    }
 };
 
 async function logReltorio(values, responsavel, id) {

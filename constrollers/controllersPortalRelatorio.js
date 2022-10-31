@@ -1,4 +1,5 @@
 const PortalRelatorios = require("../models/PortalRelatorio")
+const { Op } = require("sequelize");
 const date = require("./date")
 const portalRelatorio = {
     async upload(orcamento, upload_nome, upload_vencimento) {
@@ -21,19 +22,21 @@ const portalRelatorio = {
             return true;
         }
     },
-    async data_vencimento(orcamento){
+    async data_vencimento(orcamento) {
+        let result = ""
         try {
-    let teste =           await PortalRelatorios.findOne({
-                where:{
-                    orcamento:orcamento,
-                    upload_vencimento: {[Op.lt]: date.date_time}
+            result = await PortalRelatorios.findOne({
+                where: {
+                    orcamento: orcamento,
+                    upload_vencimento: { [Op.gte]: date.date_time }
                 }
             })
-console.log(teste)
         } catch (e) {
             return false;
         }
-        return true;
+        if (result) {
+            return true;
+        }
     }
 }
 

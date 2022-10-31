@@ -8,7 +8,7 @@ const config = require("./config/config")
 const routeReport = require("./routes/routeReport");
 
 app.use(cors(config.cors));
-app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 app.use("/report", routeReport);
 
 app.listen(PORT, () => {
