@@ -24,6 +24,7 @@ const prop = {
                 token: result.token,
                 senha: result.senha,
                 data_criacao: data_criacao,
+                data_vencimento: req.body.upload_vencimento,
                 responsavel: req.body.responsavel,
                 ativo: 1,
                 link_relatorio: req.file.location
@@ -35,13 +36,13 @@ const prop = {
         let sucesso = await logReltorio(result, req.body.responsavel, relatorio.id);
 
         if (!sucesso) {
-            return res.status(400).json({ "msg": "Refazer upload, para cadastrar o vencimento" });
+            return res.status(400).json({ "msg": "Refazer upload1" });
         }
 
-        sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, req.body.upload_vencimento);
+        sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel);
 
         if (!sucesso) {
-            return res.status(400).json({ "msg": "Refazer upload, para cadastrar o vencimento" });
+            return res.status(400).json({ "msg": "Refazer upload2" });
         }
 
         res.send({ "msg": "Relatório cadastrado com sucesso" });
@@ -54,17 +55,11 @@ const prop = {
                     where: {
                         token: req.body.token,
                         senha: req.body.senha,
+                        data_vencimento: { [Op.gte]: date.date_time }
                     }
                 })
+                res.json(relatorio);
             } catch (e) {
-                return res.status(400).send("Não foi possível fazer a busca!");
-            }
-            if(relatorio){
-                let sucesso = await portalrelatorio.data_vencimento(relatorio.orcamento);
-                if(sucesso){
-                    return res.json(relatorio)
-                }
-            }else{
                 return res.status(400).send("Não foi possível fazer a busca!");
             }
         }
@@ -78,12 +73,12 @@ const prop = {
         }
     },
     async upload_vencimento(req, res){
-        sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, req.body.upload_vencimento);
+        sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel);
 
         if (!sucesso) {
             return res.status(400).json({ "msg": "Refazer upload, para cadastrar o vencimento" });
         }
-        res.send('Su')
+        res.send('Sucesso')
     }
 };
 

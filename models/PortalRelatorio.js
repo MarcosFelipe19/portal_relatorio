@@ -13,7 +13,6 @@ class PortalLog extends Model {
             revisao: DataTypes.INTEGER(11),
             upload_data: DataTypes.DATE,
             upload_nome: DataTypes.STRING,
-            upload_vencimento: DataTypes.INTEGER(11),
             sup_data: DataTypes.DATE,
             sup_nome: DataTypes.STRING,
             ativo: DataTypes.INTEGER

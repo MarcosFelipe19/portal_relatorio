@@ -13,6 +13,7 @@ class Relatorio extends Model {
             token: DataTypes.STRING(10),
             senha: DataTypes.STRING(),
             data_criacao: DataTypes.DATE,
+            data_vencimento: DataTypes.DATE,
             responsavel: DataTypes.STRING,
             ativo: DataTypes.INTEGER,
             link_relatorio: DataTypes.STRING,
