@@ -10,6 +10,7 @@ const path = require("path");
 const { application } = require("express");
 
 app.use(cors(config.cors));
+
 app.use("/report",express.json(), routeReport);
 
 app.listen(PORT, () => {
