@@ -4,7 +4,7 @@ const uploadRelatorio = require("./midlleware/uploadRelatorio")
 const controllerReport = require("../constrollers/controllerReport");
 
 Router.post("/new", uploadRelatorio.single("pdfrelatorio"), controllerReport.novoRelatorio);
-Router.post("/upload_vencimento",  controllerReport.upload_vencimento);
+Router.post("/portal_relatorio_upload",  controllerReport.portal_relatorio_upload);
 Router.get("/search", controllerReport.getOne);
 Router.get("/searchAll", controllerReport.getall);
 

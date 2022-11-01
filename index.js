@@ -6,10 +6,11 @@ const app = express();
 const cors = require("cors");
 const config = require("./config/config")
 const routeReport = require("./routes/routeReport");
+const path = require("path");
+const { application } = require("express");
 
 app.use(cors(config.cors));
-app.use(express.json());
-app.use("/report", routeReport);
+app.use("/report",express.json(), routeReport);
 
 app.listen(PORT, () => {
     console.log(`Server running Port ${PORT}`);

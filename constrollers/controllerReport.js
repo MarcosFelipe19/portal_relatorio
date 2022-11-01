@@ -7,7 +7,7 @@ const { Sequelize } = require('sequelize');
 const data_criacao = date.date_time;
 const prop = {
     async novoRelatorio(req, res) {
-        if (!req.file && !req.body.orcamento && !req.body.responsavel) {
+        if (!req.file || !req.body.orcamento || !req.body.responsavel || !req.body.upload_vencimento) {
             return res.status(400).json({ "msg": "Error, Campos vazios não são permitidos!" });
         }
 
@@ -17,7 +17,9 @@ const prop = {
         } catch (e) {
             return res.status(400)({ "msg": "Error ao buscar o relatório!" });
         }
-
+        if(!result.token || !result.senha){
+            return res.status(400).json({ "msg": "Esse orcamento não tem token e senha!"});
+        }
         try {
             var relatorio = await Relatorio.create({
                 orcamento: req.body.orcamento,
@@ -45,7 +47,7 @@ const prop = {
             return res.status(400).json({ "msg": "Refazer upload2" });
         }
 
-        res.send({ "msg": "Relatório cadastrado com sucesso" });
+        res.status(200).json({ "msg": "Relatório cadastrado com sucesso" });
     },
     async getOne(req, res) {
         if (req.body.token && req.body.senha && req.body.nome && req.body.id) {
@@ -76,7 +78,7 @@ const prop = {
             res.send("Não foi possível fazer a busca os relatórios!");
         }
     },
-    async upload_vencimento(req, res){
+    async portal_relatorio_upload(req, res){
         sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel);
 
         if (!sucesso) {

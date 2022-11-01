@@ -23,16 +23,17 @@ const upload = multer({
             cb(null, shortId.generate() + file.originalname);
         },
     }),
-    fileFilter: (req, file, cb)=>{
-        const type = ['application/vnd.rar', 'application/x-7z-compressed', 'application/x-zip-compressed']
+    fileFilter: (req, file, cb) => {
+        console.log(file);
+        const type = ['application/vnd.rar', 'application/x-7z-compressed', 'application/zip','application/octet-stream']
         const extensaoImg = type.find(formatoAceito => formatoAceito == file.mimetype)
 
-        if(extensaoImg){
+        if (extensaoImg) {
             return cb(null, true)
         }
         return cb(null, false)
     }
-    
+
 });
 
 module.exports = upload
