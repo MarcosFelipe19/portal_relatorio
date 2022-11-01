@@ -48,17 +48,21 @@ const prop = {
         res.send({ "msg": "Relatório cadastrado com sucesso" });
     },
     async getOne(req, res) {
-        if (req.body.token && req.body.senha) {
+        if (req.body.token && req.body.senha && req.body.nome && req.body.id) {
             let relatorio = "";
             try {
-                relatorio = await Relatorio.findOne({
-                    where: {
-                        token: req.body.token,
-                        senha: req.body.senha,
-                        data_vencimento: { [Op.gte]: date.date_time }
-                    }
-                })
-                res.json(relatorio);
+                if(portalrelatorio.download(req.body.id, req.body.nome)){
+                    relatorio = await Relatorio.findOne({
+                        where: {
+                            token: req.body.token,
+                            senha: req.body.senha,
+                            data_vencimento: { [Op.gte]: date.date_time }
+                        }
+                    })
+                    res.json(relatorio);
+                }else{
+                    res.status(400).send("Não foi possível buscar o relatório");
+                }
             } catch (e) {
                 return res.status(400).send("Não foi possível fazer a busca!");
             }
@@ -79,7 +83,7 @@ const prop = {
             return res.status(400).json({ "msg": "Refazer upload, para cadastrar o vencimento" });
         }
         res.send('Sucesso')
-    }
+    },
 };
 
 async function logReltorio(values, responsavel, id) {

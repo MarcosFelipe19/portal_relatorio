@@ -21,6 +21,19 @@ const portalRelatorio = {
             return true;
         }
     },
+    async download(id, nome){
+
+        try {
+            await PortalRelatorios.update({ sup_data: date.date_time, sup_nome: nome}, {
+                where: {
+                  id:id,
+                }
+              })
+        }catch(e){
+            return false;
+        }
+        return true;
+    }
 }
 
 module.exports = portalRelatorio

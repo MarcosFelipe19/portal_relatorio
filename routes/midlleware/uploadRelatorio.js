@@ -24,7 +24,7 @@ const upload = multer({
         },
     }),
     fileFilter: (req, file, cb)=>{
-        const type = ['application/vnd.rar', 'application/x-7z-compressed']
+        const type = ['application/vnd.rar', 'application/x-7z-compressed', 'application/x-zip-compressed']
         const extensaoImg = type.find(formatoAceito => formatoAceito == file.mimetype)
 
         if(extensaoImg){
