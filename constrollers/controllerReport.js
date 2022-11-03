@@ -4,6 +4,7 @@ const Relatorio = require('../models/Relatorio');
 const PortalLog = require('../models/PortalLog');
 const date = require('./date');
 const { Sequelize } = require('sequelize');
+const { Op } = require('sequelize');
 const data_criacao = date.date_time;
 const prop = {
     async novoRelatorio(req, res) {
@@ -17,8 +18,8 @@ const prop = {
         } catch (e) {
             return res.status(400)({ "msg": "Error ao buscar o relatório!" });
         }
-        if(!result.token || !result.senha){
-            return res.status(400).json({ "msg": "Esse orcamento não tem token e senha!"});
+        if (!result.token || !result.senha) {
+            return res.status(400).json({ "msg": "Esse orcamento não tem token e senha!" });
         }
         try {
             var relatorio = await Relatorio.create({
@@ -53,7 +54,7 @@ const prop = {
         if (req.body.token && req.body.senha && req.body.nome && req.body.id) {
             let relatorio = "";
             try {
-                if(portalrelatorio.download(req.body.id, req.body.nome)){
+                if (portalrelatorio.download(req.body.id, req.body.nome)) {
                     relatorio = await Relatorio.findOne({
                         where: {
                             token: req.body.token,
@@ -62,7 +63,7 @@ const prop = {
                         }
                     })
                     res.json(relatorio);
-                }else{
+                } else {
                     res.status(400).send("Não foi possível buscar o relatório");
                 }
             } catch (e) {
@@ -70,15 +71,17 @@ const prop = {
             }
         }
     },
-    async getall(req, res){
+    async getall(req, res) {
+
         try {
-          let relatorio = await Relatorio.findAll();
-          res.json(relatorio);  
+            let relatorio = await Relatorio.findAll({  where: {orcamento: { [Op.like]: `${req.query.q}%` }}, order:[['data_criacao', 'DESC']]});
+            res.json(relatorio);
         } catch (error) {
+            console.log(error);
             res.send("Não foi possível fazer a busca os relatórios!");
         }
     },
-    async portal_relatorio_upload(req, res){
+    async portal_relatorio_upload(req, res) {
         sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel);
 
         if (!sucesso) {
