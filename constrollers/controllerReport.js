@@ -18,9 +18,13 @@ const prop = {
         } catch (e) {
             return res.status(400)({ "msg": "Error ao buscar o relatório!" });
         }
+        if (result) {
+            return res.status(400).json({ "msg": "Erro orçamento não existe!" })
+        }
         if (!result.token || !result.senha) {
             return res.status(400).json({ "msg": "Esse orcamento não tem token e senha!" });
         }
+
         try {
             var relatorio = await Relatorio.create({
                 orcamento: req.body.orcamento,
@@ -74,7 +78,7 @@ const prop = {
     async getall(req, res) {
 
         try {
-            let relatorio = await Relatorio.findAll({  where: {orcamento: { [Op.like]: `${req.query.q}%` }}, order:[['data_criacao', 'DESC']]});
+            let relatorio = await Relatorio.findAll({ where: { orcamento: { [Op.like]: `${req.query.q}%` } }, order: [['data_criacao', 'DESC']] });
             res.json(relatorio);
         } catch (error) {
             console.log(error);
