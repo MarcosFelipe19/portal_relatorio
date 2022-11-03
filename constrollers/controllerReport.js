@@ -73,6 +73,8 @@ const prop = {
             } catch (e) {
                 return res.status(400).send("Não foi possível fazer a busca!");
             }
+        } else {
+            return res.status(400).json({ "msg": "Campos vazios não são permitidos" })
         }
     },
     async getall(req, res) {
