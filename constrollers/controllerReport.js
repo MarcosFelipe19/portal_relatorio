@@ -60,8 +60,8 @@ const prop = {
             try {
                 relatorio = await Relatorio.findOne({
                     where: {
-                        token: req.body.token,
-                        senha: req.body.senha,
+                        token: req.query.token,
+                        senha: req.query.senha,
                         data_vencimento: { [Op.gte]: date.date_time }
                     }
                 })
