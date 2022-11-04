@@ -9,8 +9,15 @@ class PortalRelatorio extends Model {
                 allowNull: false,
                 autoIncrement: true
             },
+            id_portal_acessos: {
+                type: DataTypes.INTEGER,
+                allowNull: false,
+                references: { model: 'portal_acessos', key: 'id' },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
+            },
             orcamento: {
-                type:DataTypes.STRING,
+                type: DataTypes.STRING,
                 primaryKey: true,
                 allowNull: false,
             },

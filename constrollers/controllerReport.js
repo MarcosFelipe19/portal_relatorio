@@ -18,7 +18,7 @@ const prop = {
         } catch (e) {
             return res.status(400)({ "msg": "Error ao buscar o relatório!" });
         }
-        if (result) {
+        if (!result) {
             return res.status(400).json({ "msg": "Erro orçamento não existe!" })
         }
         if (!result.token || !result.senha) {
@@ -43,11 +43,11 @@ const prop = {
         let sucesso = await logReltorio(result, req.body.responsavel, relatorio.id);
 
         if (!sucesso) {
-            return res.status(400).json({ "msg": "Refazer upload1" });
+            return res.status(400).json({ "msg": "Refazer upload" });
         }
 
-        sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel);
-
+        sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, relatorio.id);
+        
         if (!sucesso) {
             return res.status(400).json({ "msg": "Refazer upload2" });
         }
@@ -67,7 +67,7 @@ const prop = {
                 })
                 res.json(relatorio);
             } catch (e) {
-                return res.status(400).json({"msf":"Não foi possível fazer a busca!"});
+                return res.status(400).json({ "msf": "Não foi possível fazer a busca!" });
             }
         } else {
             return res.status(400).json({ "msg": "Campos vazios não são permitidos" })
@@ -80,7 +80,7 @@ const prop = {
             res.json(relatorio);
         } catch (error) {
             console.log(error);
-            res.status(400).json({"msg":"Não foi possível fazer a busca os relatórios!"});
+            res.status(400).json({ "msg": "Não foi possível fazer a busca os relatórios!" });
         }
     },
     async portal_relatorio_upload(req, res) {
@@ -89,7 +89,7 @@ const prop = {
         if (!sucesso) {
             return res.status(400).json({ "msg": "Refazer upload, para cadastrar o vencimento" });
         }
-        res.json({"msg":"Sucesso"})
+        res.json({ "msg": "Sucesso" })
     },
 };
 

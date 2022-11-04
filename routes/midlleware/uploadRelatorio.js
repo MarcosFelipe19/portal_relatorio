@@ -33,7 +33,6 @@ const upload = multer({
         }
         return cb(null, false)
     }
-
 });
 
 module.exports = upload
