@@ -30,7 +30,7 @@ const portalRelatorio = {
               })
             res.json({"msg":"Sucesso!"})  
         }catch(e){
-            res.status(400).json({"msg":"não foi possível fazer o download!"}
+            res.status(400).json({"msg":"não foi possível fazer o download!"});
         }
     }
 }

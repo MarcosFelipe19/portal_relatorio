@@ -67,7 +67,7 @@ const prop = {
                 })
                 res.json(relatorio);
             } catch (e) {
-                return res.status(400).send("Não foi possível fazer a busca!");
+                return res.status(400).json({"msf":"Não foi possível fazer a busca!"});
             }
         } else {
             return res.status(400).json({ "msg": "Campos vazios não são permitidos" })
@@ -80,7 +80,7 @@ const prop = {
             res.json(relatorio);
         } catch (error) {
             console.log(error);
-            res.send("Não foi possível fazer a busca os relatórios!");
+            res.status(400).json({"msg":"Não foi possível fazer a busca os relatórios!"});
         }
     },
     async portal_relatorio_upload(req, res) {
@@ -89,7 +89,7 @@ const prop = {
         if (!sucesso) {
             return res.status(400).json({ "msg": "Refazer upload, para cadastrar o vencimento" });
         }
-        res.send('Sucesso')
+        res.json({"msg":"Sucesso"})
     },
 };
 
