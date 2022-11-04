@@ -55,7 +55,7 @@ const prop = {
         res.status(200).json({ "msg": "Relatório cadastrado com sucesso" });
     },
     async getOne(req, res) {
-        if (req.body.token && req.body.senha) {
+        if (req.query.token && req.query.senha) {
             let relatorio = "";
             try {
                 relatorio = await Relatorio.findOne({
