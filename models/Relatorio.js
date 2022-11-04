@@ -9,7 +9,11 @@ class Relatorio extends Model {
                 autoIncrement: true,
                 allowNull: false
             },
-            orcamento: DataTypes.STRING,
+            orcamento:{
+                orcamento: DataTypes.STRING,
+                primaryKey: true,
+                allowNull: false
+            },
             token: DataTypes.STRING(10),
             senha: DataTypes.STRING(),
             data_criacao: DataTypes.DATE,

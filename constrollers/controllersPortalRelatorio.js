@@ -21,18 +21,17 @@ const portalRelatorio = {
             return true;
         }
     },
-    async download(id, nome){
-
+    async download(req, res){
         try {
             await PortalRelatorios.update({ sup_data: date.date_time, sup_nome: nome}, {
                 where: {
                   id:id,
                 }
               })
+            res.json({"msg":"Sucesso!"})  
         }catch(e){
-            return false;
+            res.status(400).json({"msg":"não foi possível fazer o download!"}
         }
-        return true;
     }
 }
 

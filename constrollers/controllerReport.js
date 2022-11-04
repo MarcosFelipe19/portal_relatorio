@@ -55,21 +55,17 @@ const prop = {
         res.status(200).json({ "msg": "Relatório cadastrado com sucesso" });
     },
     async getOne(req, res) {
-        if (req.body.token && req.body.senha && req.body.nome && req.body.id) {
+        if (req.body.token && req.body.senha) {
             let relatorio = "";
             try {
-                if (portalrelatorio.download(req.body.id, req.body.nome)) {
-                    relatorio = await Relatorio.findOne({
-                        where: {
-                            token: req.body.token,
-                            senha: req.body.senha,
-                            data_vencimento: { [Op.gte]: date.date_time }
-                        }
-                    })
-                    res.json(relatorio);
-                } else {
-                    res.status(400).send("Não foi possível buscar o relatório");
-                }
+                relatorio = await Relatorio.findOne({
+                    where: {
+                        token: req.body.token,
+                        senha: req.body.senha,
+                        data_vencimento: { [Op.gte]: date.date_time }
+                    }
+                })
+                res.json(relatorio);
             } catch (e) {
                 return res.status(400).send("Não foi possível fazer a busca!");
             }

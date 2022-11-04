@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 
-class PortalLog extends Model {
+class PortalRelatorio extends Model {
     static init(sequelize) {
         super.init({
             id: {
@@ -9,7 +9,11 @@ class PortalLog extends Model {
                 allowNull: false,
                 autoIncrement: true
             },
-            orcamento: DataTypes.STRING,
+            orcamento: {
+                type:DataTypes.STRING,
+                primaryKey: true,
+                allowNull: false,
+            },
             revisao: DataTypes.INTEGER(11),
             upload_data: DataTypes.DATE,
             upload_nome: DataTypes.STRING,
@@ -22,4 +26,4 @@ class PortalLog extends Model {
         })
     }
 };
-module.exports = PortalLog;
+module.exports = PortalRelatorio;
