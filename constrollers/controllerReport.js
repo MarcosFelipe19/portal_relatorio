@@ -25,7 +25,6 @@ const prop = {
         if (!result.token || !result.senha) {
             return res.status(400).json({ "msg": "Esse orcamento não tem token e senha!" });
         }
-
         try {
             var relatorio = await Relatorio.create({
                 orcamento: req.body.orcamento,

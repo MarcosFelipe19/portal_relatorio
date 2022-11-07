@@ -1,9 +1,9 @@
-const date = new Date();
+const date = new Date()
 
 let dateTime = {
-    date: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate(),
-    time: date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds(),
-    date_time: date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + " " + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds()
+    date: date.toLocaleDateString(),
+    time: (date.getHours()-3) + ":" + date.getMinutes() + ":" + date.getSeconds(),
+    date_time: date.toLocaleDateString().toLocaleString() + " " +  (date.getHours()-3) + ":" + date.getMinutes() + ":" + date.getSeconds(),
 }
 
 module.exports = dateTime;
