@@ -26,6 +26,7 @@ class PortalRelatorio extends Model {
             upload_nome: DataTypes.STRING,
             sup_data: DataTypes.DATE,
             sup_nome: DataTypes.STRING,
+            sup_ip: DataTypes.STRING(18),
             ativo: DataTypes.INTEGER
         }, {
             sequelize,

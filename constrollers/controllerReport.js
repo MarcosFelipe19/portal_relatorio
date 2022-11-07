@@ -5,6 +5,7 @@ const PortalLog = require('../models/PortalLog');
 const date = require('./date');
 const { Sequelize } = require('sequelize');
 const { Op } = require('sequelize');
+const PortalRelatorio = require('../models/PortalRelatorio');
 const data_criacao = date.date_time;
 const prop = {
     async novoRelatorio(req, res) {
@@ -40,16 +41,16 @@ const prop = {
             return res.status(400).json({ "msg": "Error, não foi possível cadastrar o relatório" });
         }
 
-        let sucesso = await logReltorio(result, req.body.responsavel, relatorio.id);
+        let sucesso = await logReltorio(result, req.body.responsavel, relatorio.id, "NOVO RELATÓRIO" );
 
         if (!sucesso) {
-            return res.status(400).json({ "msg": "Refazer upload" });
+            return res.status(400).json(relatorio);
         }
 
         sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, relatorio.id);
-        
+
         if (!sucesso) {
-            return res.status(400).json({ "msg": "Refazer upload2" });
+            return res.status(400).json(relatorio);
         }
 
         res.status(200).json({ "msg": "Relatório cadastrado com sucesso" });
@@ -84,7 +85,7 @@ const prop = {
         }
     },
     async portal_relatorio_upload(req, res) {
-        sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel);
+        sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, req.body.chave_estrangeira);
 
         if (!sucesso) {
             return res.status(400).json({ "msg": "Refazer upload, para cadastrar o vencimento" });
@@ -93,7 +94,7 @@ const prop = {
     },
 };
 
-async function logReltorio(values, responsavel, id) {
+async function logReltorio(values, responsavel, id, motivo) {
     try {
         await PortalLog.create({
             tabeba_db: "portal_acessos",
@@ -101,7 +102,7 @@ async function logReltorio(values, responsavel, id) {
             nome_chave: id,
             registro_data: data_criacao,
             registro_resp: responsavel,
-            motivo: "NOVO RELATÓRIO",
+            motivo: motivo,
             obs: `Orçamento: ${values.orcamento} Token: ${values.token}, Senha: ${values.senha}`
         })
     } catch (e) {

@@ -14,6 +14,7 @@ const portalRelatorio = {
                     upload_nome: upload_nome,
                     sup_data: undefined,
                     sup_nome: undefined,
+                    sup_ip: undefined,
                     ativo: 1
                 })
             } catch (e) {
@@ -24,9 +25,10 @@ const portalRelatorio = {
     },
     async download(req, res) {
         try {
-            await PortalRelatorios.update({ sup_data: date.date_time, sup_nome: nome }, {
+            await PortalRelatorios.update({ sup_data: date.date_time, sup_nome: req.body.nome, sup_ip: req.body.ip}, {
                 where: {
-                    id: id,
+                    id: req.body.id,
+                    orcamento: req.body.orcamento
                 }
             })
             res.json({ "msg": "Sucesso!" })
