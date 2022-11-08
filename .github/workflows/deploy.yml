@@ -5,7 +5,7 @@ on: [push]
 jobs:
   build:
 
-    runs-on: ubuntu-lts-22
+    runs-on: ubuntu-lts
 
     steps:
     - uses: actions/checkout@v1
