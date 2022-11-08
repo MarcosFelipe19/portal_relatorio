@@ -8,10 +8,12 @@ const config = require("./config/config")
 const routeReport = require("./routes/routeReport");
 const path = require("path");
 const { application } = require("express");
-const teste= "ddddd";
-app.use(cors(config.cors));
 
-app.use("/report",express.json(), routeReport);
+app.use(cors(config.cors));
+app.use("/", (req, res) => {
+    res.send("hello world");
+})
+app.use("/report", express.json(), routeReport);
 
 app.listen(PORT, () => {
     console.log(`Server running Port ${PORT}`);
