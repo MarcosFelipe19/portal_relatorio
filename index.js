@@ -8,7 +8,7 @@ const config = require("./config/config")
 const routeReport = require("./routes/routeReport");
 const path = require("path");
 const { application } = require("express");
-const teste= "fff";
+const teste= "fffd";
 app.use(cors(config.cors));
 
 app.use("/report",express.json(), routeReport);
