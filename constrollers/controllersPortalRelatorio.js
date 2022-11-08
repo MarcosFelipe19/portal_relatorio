@@ -9,7 +9,7 @@ const portalRelatorio = {
                 await PortalRelatorios.create({
                     id_portal_acessos: chave_estrangeira,
                     orcamento: orcamento,
-                    revisao: 0,
+                    revisao: 0, 
                     upload_data: date.date_time,
                     upload_nome: upload_nome,
                     sup_data: undefined,
