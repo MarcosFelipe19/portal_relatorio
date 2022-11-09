@@ -27,8 +27,10 @@ const portalRelatorio = {
         try {
             await PortalRelatorios.update({ sup_data: date.date_time, sup_nome: req.body.nome, sup_ip: req.body.ip}, {
                 where: {
-                    id_portal_acessos: req.body.id,
-                    orcamento: req.body.orcamento
+                    [Op.and]: [
+                        {id_portal_acessos: req.body.id},
+                        {orcamento: req.body.orcamento }
+                      ]
                 }
             })
             res.json({ "msg": "Sucesso!" })
