@@ -40,7 +40,7 @@ const prop = {
             return res.status(400).json({ "msg": "Error, não foi possível cadastrar o relatório" });
         }
 
-        let sucesso = await logReltorio(result, req.body.responsavel, relatorio.id, "NOVO RELATÓRIO" );
+        let sucesso = await logReltorio(relatorio, req.body.responsavel, relatorio.id, "NOVO RELATÓRIO" );
 
         if (!sucesso) {
             return res.status(400).json(relatorio);
