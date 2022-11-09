@@ -1,25 +1,25 @@
-name: Node CI
+# name: Node CI
 
-on: [push]
+# on: [push]
 
-jobs:
-  build:
+# jobs:
+#   build:
 
-    runs-on: ubuntu-latest
+#     runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v1
-    - name: Install Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '16.x'
-    - name: Install npm dependencies
-      run: npm install
-    - name: Deploy to Server
-      uses: easingthemes/ssh-deploy@main
-      env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SOURCE: "./"
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: "/home/ec2-user"
+#     steps:
+#     - uses: actions/checkout@v1
+#     - name: Install Node.js
+#       uses: actions/setup-node@v1
+#       with:
+#         node-version: '16.x'
+#     - name: Install npm dependencies
+#       run: npm install
+#     - name: Deploy to Server
+#       uses: easingthemes/ssh-deploy@main
+#       env:
+#           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+#           SOURCE: "./"
+#           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+#           REMOTE_USER: ${{ secrets.REMOTE_USER }}
+#           TARGET: "/home/ec2-user"
