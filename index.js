@@ -10,9 +10,7 @@ const path = require("path");
 const { application } = require("express");
 
 app.use(cors(config.cors));
-app.use("/", (req, res) => {
-    res.send("hello world33333");
-})
+
 app.use("/report", express.json(), routeReport);
 
 app.listen(PORT, () => {

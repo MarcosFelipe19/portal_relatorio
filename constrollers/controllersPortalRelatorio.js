@@ -27,7 +27,7 @@ const portalRelatorio = {
         try {
             await PortalRelatorios.update({ sup_data: date.date_time, sup_nome: req.body.nome, sup_ip: req.body.ip}, {
                 where: {
-                    id: req.body.id,
+                    id_portal_acessos: req.body.id,
                     orcamento: req.body.orcamento
                 }
             })
