@@ -10,13 +10,13 @@ const search = {
         return result;
     },
     buscarOrcamentos: (req, res) =>{
-        Proposta.findAll({ limit: 100 }).then(data => {
+        Proposta.findAll({ limit: 1 }).then(data => {
             res.json(data);
         }).catch(err => {
             res.status(400).json({"msg":"Error, no servidor não foi possível fazer a busca"});
         })                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
     },
-    
+
 };
 
 module.exports = search;
