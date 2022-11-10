@@ -62,7 +62,7 @@ const prop = {
                     where: {
                         token: req.query.token,
                         senha: req.query.senha,
-                        data_vencimento: { [Op.gte]: date.date_time }
+                        // data_vencimento: { [Op.gte]: date.date_time }
                     }
                 })
                 res.json(relatorio);
