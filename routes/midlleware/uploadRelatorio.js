@@ -20,7 +20,7 @@ const upload = multer({
         contentType: multerS3.AUTO_CONTENT_TYPE,
         acl: 'public-read',
         key: function (req, file, cb) {
-            cb(null, shortId.generate() + file.originalname);
+            cb(null, "teste" + shortId.generate() + file.originalname);
         },
     }),
     fileFilter: (req, file, cb) => {
