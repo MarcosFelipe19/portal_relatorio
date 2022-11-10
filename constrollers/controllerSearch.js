@@ -11,7 +11,7 @@ const search = {
     },
     async buscarOrcamentos (req, res) {
         try {
-            let orcamentos = await Proposta.findAll({limit: 1});
+            let orcamentos = await Proposta.findOne();
             res.json(orcamentos)
         }catch (err) {
             res.send({"msg":"Erro, não deu certo"})
