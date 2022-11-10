@@ -12,7 +12,7 @@ jobs:
     - name: Install Node.js
       uses: actions/setup-node@v1
       with:
-        node-version: '16.x'
+        node-version: '18.x'
     - name: Install npm dependencies
       run: npm install
     - name: Deploy to Server
@@ -22,4 +22,4 @@ jobs:
           SOURCE: "./"
           REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
           REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{secrets.TARGET}}
+          TARGET: "/home/ec2-user"
