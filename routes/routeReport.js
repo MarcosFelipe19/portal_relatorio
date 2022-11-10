@@ -9,8 +9,5 @@ Router.post("/portal_relatorio_upload", controllerReport.portal_relatorio_upload
 Router.get("/search", controllerReport.getOne);
 Router.post("/download", controllerPortalRelatorio.download)
 Router.get("/searchAll", controllerReport.getall);
-Router.get("/", (req, res) => {
-    res.send("sucesso");
-})
 
 module.exports = Router;
