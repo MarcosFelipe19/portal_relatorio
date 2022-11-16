@@ -21,7 +21,7 @@ const search = {
         if(req.query.orcamento){
             try{
                 let os = await OsLab.findAll({where: {orcamento: req.query.orcamento}, limit: 500});
-                res.json({"os": os.OS});
+                res.json({"os": os.OS, "laboratorio": os.Laboratorio});
             }catch(err){
                 res.status(400).send("Error, não foi possível fazer a busca!");
             }
