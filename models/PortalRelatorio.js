@@ -24,10 +24,7 @@ class PortalRelatorio extends Model {
             revisao: DataTypes.INTEGER(11),
             upload_data: DataTypes.DATE,
             upload_nome: DataTypes.STRING,
-            sup_data: DataTypes.DATE,
-            sup_nome: DataTypes.STRING,
-            sup_ip: DataTypes.STRING(18),
-            ativo: DataTypes.INTEGER
+            ativo: DataTypes.INTEGER(1),
         }, {
             sequelize,
             tableName: "portal_relatorios"

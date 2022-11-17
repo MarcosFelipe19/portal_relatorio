@@ -42,23 +42,23 @@ const prop = {
 
         let sucesso = await logReltorio(relatorio, req.body.responsavel, relatorio.id, "NOVO RELATÓRIO" );
 
-        if (!sucesso) {
+        if (sucesso) {
             return res.status(400).json(relatorio);
         }
 
         sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, relatorio.id);
 
-        if (!sucesso) {
+        if (sucesso) {
             return res.status(400).json(relatorio);
         }
 
-        res.status(200).json({ "msg": "Relatório cadastrado com sucesso" });
+        res.status(200).json({ "msg": "Não foi possível "});
     },
     async getOne(req, res) {
         if (req.query.token && req.query.senha) {
             let relatorio = "";
             try {
-                relatorio = await Relatorio.findOne({
+                relatorio = await Relatorio.findAll({
                     where: {
                         token: req.query.token,
                         senha: req.query.senha,
@@ -67,19 +67,17 @@ const prop = {
                 })
                 res.json(relatorio);
             } catch (e) {
-                return res.status(400).json({ "msf": "Não foi possível fazer a busca!" });
+                return res.status(400).json({ "msg": "Não foi possível fazer a busca!" });
             }
         } else {
             return res.status(400).json({ "msg": "Campos vazios não são permitidos" })
         }
     },
     async getall(req, res) {
-
         try {
             let relatorio = await Relatorio.findAll({ where: { orcamento: { [Op.like]: `${req.query.q}%` } }, order: [['data_criacao', 'DESC']] });
             res.json(relatorio);
         } catch (error) {
-            console.log(error);
             res.status(400).json({ "msg": "Não foi possível fazer a busca os relatórios!" });
         }
     },
@@ -96,7 +94,7 @@ const prop = {
 async function logReltorio(values, responsavel, id, motivo) {
     try {
         await PortalLog.create({
-            tabeba_db: "portal_acessos",
+            tabela_db: "portal_acessos",
             chave_primaria: "id",
             nome_chave: id,
             registro_data: data_criacao,

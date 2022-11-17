@@ -7,6 +7,9 @@ const Relatorio = require('../models/Relatorio');
 const PortalLog = require('../models/PortalLog');
 const PortalRelatorio = require('../models/PortalRelatorio');
 const OsLab = require('../models/OsLab');
+const PortalDownload = require("../models/PortalDownload");
+const PortalEmails = require("../models/PortalEmails");
+const portalClientes = require("../models/PortalEmails");
 
 const connection = new Sequelize(dbConfig);
 const connectionU83TI = new Sequelize(dbConfigU83TI);
@@ -16,5 +19,9 @@ Relatorio.init(connectionU83TI);
 PortalLog.init(connectionU83TI);
 PortalRelatorio.init(connectionU83TI);
 OsLab.init(connection);
+PortalDownload.init(connectionU83TI);
+PortalEmails.init(connectionU83TI);
+portalClientes.init(connectionU83TI);
+
 
 module.exports = connection;
