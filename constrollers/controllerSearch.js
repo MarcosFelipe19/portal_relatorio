@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const Proposta = require('../models/Proposta');
 const OsLab = require('../models/OsLab');
 const { sequelize } = require('../models/Proposta');
@@ -12,10 +12,21 @@ const search = {
     },
     async buscarOrcamentos(req, res) {
         try {
-            let orcamentos = await Proposta.findAll({ attributes: [[sequelize.fn('CONCAT', sequelize.col('codigo'), sequelize.col('mes'), sequelize.col('ano')), 'orcamento']], order: [['Dataofe', 'DESC']], limit: 500 });
+            let start = +req.query.start;
+            let end = +req.query.end;
+            let orcamentos = await Proposta.findAll({
+                where: Sequelize.where(Sequelize.fn("CONCAT", Sequelize.col("codigo"), Sequelize.col("mes"), Sequelize.col("ano")), {
+                    [Op.like]: `${req.query.q}%`
+                }),
+                attributes: [[sequelize.fn('CONCAT', sequelize.col('codigo'),
+                    sequelize.col('mes'), sequelize.col('ano')), 'orcamento']],
+                order: [['Dataofe', 'DESC']],
+                offset: start, limit: end
+            });
             res.json(orcamentos)
         } catch (err) {
-            res.send({ "msg": "Erro, Não foi possível fazer a busca!" })
+            console.log(err)
+            res.json({ "msg": "Erro, Não foi possível fazer a busca!" })
         }
     },
     async buscarOs(req, res) {

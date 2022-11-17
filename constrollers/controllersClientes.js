@@ -2,13 +2,13 @@ const PortalClientes = require("../models/PortalClientes");
 const PortalEmails = require("../models/PortalEmails");
 
 const clientes = {
-    async novoCliente(req, res){
-        if(req.body.nome_empresa && req.body.endereco && req.body.email){
+    async novoCliente(req, res) {
+        if (req.body.nome_empresa && req.body.endereco && req.body.email) {
             let email = "";
             try {
-                email = PortalEmails.create({email: req.body.email})
+                email = await PortalEmails.create({ email: req.body.email })
             } catch (error) {
-                return res.status(400).json({"msg":"Error, Não foi possível cadastrar!"})
+                return res.status(400).json({ "msg": "Error, Não foi possível cadastrar!" })
             }
 
             try {
@@ -17,13 +17,14 @@ const clientes = {
                     endereco: req.body.endereco,
                     id_email: email.id,
                 })
-            }catch (error){
-                return res.status(400).json({"msg": "Cliente gravado com sucesso!"})
+                return res.json({ "msg": "Cliente gravado com sucesso!" })
+            } catch (error) {
+                return res.status(400).json({ "msg": "Error, não foi possível gravar o cliente!" })
             }
         }
-        return res.status(400).json({"msg":"Error, campos vazios não são permitidos!"});
+        return res.status(400).json({ "msg": "Error, campos vazios não são permitidos!" });
     },
-    getCliente(req, res){
+    getCliente(req, res) {
 
     }
 }

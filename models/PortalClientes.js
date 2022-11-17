@@ -1,9 +1,9 @@
-const {Model, DataTypes} = require("sequelize");
+const { Model, DataTypes } = require("sequelize");
 
-class PortalDownload extends Model {
-    static init(sequelize){
+class PortalClientes extends Model {
+    static init(sequelize) {
         super.init({
-            id:{
+            id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 allowNull: false,
@@ -13,16 +13,17 @@ class PortalDownload extends Model {
             endereco: DataTypes.STRING,
             id_email: {
                 type: DataTypes.INTEGER,
-                references:{model: 'portal_emails', key: 'id'}
+                allowNull: false,
+                references: { model: 'portal_emails', key: 'id' },
+                onDelete: 'CASCADE',
+                onUpdate: 'CASCADE',
             },
-            onDelete: 'CASCADE',
-            onUpdate: 'CASCADE',
         },
-        {
-            sequelize,
-            tableName: "portal_clientes",
-        }
+            {
+                sequelize,
+                tableName: "portal_clientes",
+            }
         )
     }
 }
-module.exports = PortalDownload
+module.exports = PortalClientes
