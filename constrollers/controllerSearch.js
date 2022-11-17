@@ -1,6 +1,7 @@
 const { Sequelize } = require('sequelize');
 const Proposta = require('../models/Proposta');
 const OsLab = require('../models/OsLab');
+const { sequelize } = require('../models/Proposta');
 const search = {
     async bucarProposta(orcamento) {
 
@@ -11,10 +12,10 @@ const search = {
     },
     async buscarOrcamentos(req, res) {
         try {
-            let orcamentos = await Proposta.findAll({ order: [['Dataofe', 'DESC']], limit: 500 });
+            let orcamentos = await Proposta.findAll({ attributes: [[sequelize.fn('CONCAT', sequelize.col('codigo'), sequelize.col('mes'), sequelize.col('ano')), 'orcamento']], order: [['Dataofe', 'DESC']], limit: 500 });
             res.json(orcamentos)
         } catch (err) {
-            res.send({ "msg": "Erro, Servidor está fora do ar" })
+            res.send({ "msg": "Erro, Não foi possível fazer a busca!" })
         }
     },
     async buscarOs(req, res) {
