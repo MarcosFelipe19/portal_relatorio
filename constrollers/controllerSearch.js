@@ -42,14 +42,14 @@ const search = {
         }
 
     },
-    async getFiltro(req, res) {
-        try {
-            let relatorio = await OsLab.findAll({ where: { orcamento: { [Op.like]: `${req.query.q}%` } } });
-            res.json(relatorio);
-        } catch (error) {
-            res.status(400).json({ "msg": "Não foi possível fazer a busca os relatórios!" });
-        }
-    },
+    // async getFiltro(req, res) {
+    //     try {
+    //         let relatorio = await OsLab.findAll({ where: { orcamento: { [Op.like]: `${req.query.q}%` } } });
+    //         res.json(relatorio);
+    //     } catch (error) {
+    //         res.status(400).json({ "msg": "Não foi possível fazer a busca os relatórios!" });
+    //     }
+    // },
 };
 
 module.exports = search;

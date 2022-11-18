@@ -11,13 +11,6 @@ class PortalClientes extends Model {
             },
             nome_empresa: DataTypes.STRING(100),
             endereco: DataTypes.STRING,
-            id_email: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-                references: { model: 'portal_emails', key: 'id' },
-                onDelete: 'CASCADE',
-                onUpdate: 'CASCADE',
-            },
         },
             {
                 sequelize,
