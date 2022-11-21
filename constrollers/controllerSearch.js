@@ -12,9 +12,7 @@ const search = {
     },
     async buscarOrcamentos(req, res) {
         try {
-            if (!req.query.orcamento) {
-                return res.status(400).json({ "msg": "Sem orcamento" })
-            }
+
             let orcamentos = await Proposta.findAll({
                 where: Sequelize.where(Sequelize.fn("CONCAT", Sequelize.col("codigo"), Sequelize.col("mes"), Sequelize.col("ano")), {
                     [Op.like]: `${req.query.q}%`
@@ -24,7 +22,9 @@ const search = {
                 order: [['Dataofe', 'DESC']],
                 offset: start, limit: 20
             });
-
+            // if (!req.query.orcamento) {
+            //     return res.status(400).json({ "msg": "Sem orcamento" })
+            // }
             // let orcamentos = await Proposta.findOne({
             //     where: Sequelize.where(Sequelize.fn("CONCAT", Sequelize.col("codigo"), Sequelize.col("mes"), Sequelize.col("ano")), {
             //         [Op.eq]: req.query.orcamento
