@@ -9,7 +9,7 @@ const PortalRelatorio = require('../models/PortalRelatorio');
 const OsLab = require('../models/OsLab');
 const PortalDownload = require("../models/PortalDownload");
 const PortalEmails = require("../models/PortalEmails");
-const portalClientes = require("../models/PortalEmails");
+const portalClientes = require("../models/PortalClientes");
 
 const connection = new Sequelize(dbConfig);
 const connectionU83TI = new Sequelize(dbConfigU83TI);

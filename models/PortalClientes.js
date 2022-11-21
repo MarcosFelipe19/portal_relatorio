@@ -6,17 +6,15 @@ class PortalClientes extends Model {
             id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
-                allowNull: false,
                 autoIncrement: true,
+                allowNull: false,
             },
-            nome_empresa: DataTypes.STRING(100),
+            nome_empresa: DataTypes.STRING,
             endereco: DataTypes.STRING,
-        },
-            {
-                sequelize,
-                tableName: "portal_clientes",
-            }
-        )
+        }, {
+            sequelize,
+            tableName: "portal_clientes",
+        })
     }
 }
 module.exports = PortalClientes

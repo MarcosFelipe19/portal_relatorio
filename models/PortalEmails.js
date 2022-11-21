@@ -1,6 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 
-class PortalDownload extends Model {
+class PortalEmails extends Model {
     static init(sequelize) {
         super.init({
             id: {
@@ -25,4 +25,4 @@ class PortalDownload extends Model {
         )
     }
 }
-module.exports = PortalDownload
+module.exports = PortalEmails

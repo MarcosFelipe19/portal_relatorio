@@ -10,7 +10,7 @@ const portalRelatorio = {
                 await PortalRelatorios.create({
                     id_portal_acessos: chave_estrangeira,
                     orcamento: orcamento,
-                    revisao: 0, 
+                    revisao: 0,
                     upload_data: date.date_time,
                     upload_nome: upload_nome,
                     ativo: 1
@@ -23,7 +23,7 @@ const portalRelatorio = {
     },
     async download(req, res) {
         try {
-            await PortalRelatorios.create({ orcamento: req.body.orcamento, download_nome: req.body.nome, download_ip: req.body.ip, download_localizacao: req.body.localizacao})
+            await PortalRelatorios.create({ orcamento: req.body.orcamento, download_nome: req.body.nome, download_ip: req.body.ip, download_localizacao: req.body.localizacao })
             res.json({ "msg": "Sucesso!" })
         } catch (e) {
             res.status(400).json({ "msg": "não foi possível fazer o download!" });
