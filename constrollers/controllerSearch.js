@@ -12,6 +12,9 @@ const search = {
     },
     async buscarOrcamentos(req, res) {
         try {
+            let page = +req.query.page;
+            let qtd = 20;
+            let start = (page - 1) * qtd
 
             let orcamentos = await Proposta.findAll({
                 where: Sequelize.where(Sequelize.fn("CONCAT", Sequelize.col("codigo"), Sequelize.col("mes"), Sequelize.col("ano")), {
