@@ -12,24 +12,24 @@ const search = {
     },
     async buscarOrcamentos(req, res) {
         try {
-
-            // let orcamentos = await Proposta.findAll({
-            //     where: Sequelize.where(Sequelize.fn("CONCAT", Sequelize.col("codigo"), Sequelize.col("mes"), Sequelize.col("ano")), {
-            //         [Op.like]: `${req.query.q}%`
-            //     }),
-            //     attributes: [[sequelize.fn('CONCAT', sequelize.col('codigo'),
-            //         sequelize.col('mes'), sequelize.col('ano')), 'orcamento']],
-            //     order: [['Dataofe', 'DESC']],
-            //     offset: start, limit: 20
-            // });
             if (!req.query.orcamento) {
                 return res.status(400).json({ "msg": "Sem orcamento" })
             }
-            let orcamentos = await Proposta.findOne({
+            let orcamentos = await Proposta.findAll({
                 where: Sequelize.where(Sequelize.fn("CONCAT", Sequelize.col("codigo"), Sequelize.col("mes"), Sequelize.col("ano")), {
-                    [Op.eq]: req.query.orcamento
-                })
+                    [Op.like]: `${req.query.q}%`
+                }),
+                attributes: [[sequelize.fn('CONCAT', sequelize.col('codigo'),
+                    sequelize.col('mes'), sequelize.col('ano')), 'orcamento']],
+                order: [['Dataofe', 'DESC']],
+                offset: start, limit: 20
             });
+
+            // let orcamentos = await Proposta.findOne({
+            //     where: Sequelize.where(Sequelize.fn("CONCAT", Sequelize.col("codigo"), Sequelize.col("mes"), Sequelize.col("ano")), {
+            //         [Op.eq]: req.query.orcamento
+            //     })
+            // });
             res.json(orcamentos)
         } catch (err) {
             console.log(err)

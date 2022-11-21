@@ -1,5 +1,5 @@
 const PortalRelatorios = require("../models/PortalRelatorio");
-const PortalDownloadha = require("../models/PortalDownload");
+const PortalDownload = require("../models/PortalDownload");
 const { Op } = require("sequelize");
 const date = require("./date")
 const portalRelatorio = {
@@ -22,12 +22,13 @@ const portalRelatorio = {
         }
     },
     async download(req, res) {
-        try {
-            await PortalRelatorios.create({ orcamento: req.body.orcamento, download_nome: req.body.nome, download_ip: req.body.ip, download_localizacao: req.body.localizacao })
-            res.json({ "msg": "Sucesso!" })
-        } catch (e) {
-            res.status(400).json({ "msg": "não foi possível fazer o download!" });
-        }
+        if (!req.body.orcamentos || !req.body.download_ip || !req.body.nome || !req.body.localizacao)
+            try {
+                await PortalDownload.create({ orcamento: req.body.orcamento, download_nome: req.body.nome, download_ip: req.body.ip, download_localizacao: req.body.localizacao })
+                res.json({ "msg": "Sucesso!" })
+            } catch (e) {
+                res.status(400).json({ "msg": "não foi possível fazer o download!" });
+            }
     }
 }
 
