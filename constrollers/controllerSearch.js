@@ -20,13 +20,10 @@ const search = {
                     [Op.eq]: req.query.orcamento
                 })
             });
-            res.json(orcamentos)
+            res.json(orcamentos);
         } catch (err) {
-            console.log(err)
             res.json({ "msg": "Erro, Não foi possível fazer a busca!" })
         }
-
-
     },
     // async buscarOrcamentos(req, res) {
     //     try {

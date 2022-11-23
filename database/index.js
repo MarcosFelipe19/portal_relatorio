@@ -9,6 +9,7 @@ const OsLab = require('../models/OsLab');
 const PortalDownload = require("../models/PortalDownload");
 const PortalEmails = require("../models/PortalEmails");
 const portalClientes = require("../models/PortalClientes");
+const Clientes = require("../models/Clientes");
 
 const connection = new Sequelize(dbConfig);
 const connectionU83TI = new Sequelize(dbConfigU83TI);
@@ -21,6 +22,7 @@ OsLab.init(connection);
 PortalDownload.init(connectionU83TI);
 PortalEmails.init(connectionU83TI);
 portalClientes.init(connectionU83TI);
+Clientes.init(connection);
 
 
 module.exports = connection;

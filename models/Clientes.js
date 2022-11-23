@@ -122,3 +122,5 @@ class Clientes extends Model {
         })
     }
 }
+
+module.exports = Clientes;

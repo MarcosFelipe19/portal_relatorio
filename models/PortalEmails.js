@@ -10,13 +10,7 @@ class PortalEmails extends Model {
                 autoIncrement: true,
             },
             email: DataTypes.STRING(100),
-            id_cliente: {
-                type: DataTypes.INTEGER,
-                allowNull: false,
-                references: { model: 'portal_clientes', key: 'id' },
-                onDelete: 'CASCADE',
-                onUpdate: 'CASCADE',
-            },
+            cod_cli: DataTypes.INTEGER(20),
         },
             {
                 sequelize,
