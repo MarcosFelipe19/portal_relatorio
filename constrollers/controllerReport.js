@@ -4,7 +4,6 @@ const Relatorio = require('../models/Relatorio');
 const PortalLog = require('../models/PortalLog');
 const date = require('./date');
 const { Op } = require('sequelize');
-const PortalRelatorio = require('../models/PortalRelatorio');
 const data_criacao = date.date_time;
 const prop = {
     async novoRelatorio(req, res) {
@@ -37,12 +36,6 @@ const prop = {
             })
         } catch (error) {
             return res.status(400).json({ "msg": "Error, não foi possível cadastrar o relatório" });
-        }
-
-        let sucesso = await logReltorio(relatorio, req.body.responsavel, relatorio.id, "NOVO RELATÓRIO");
-
-        if (!sucesso) {
-            return res.status(400).json(relatorio);
         }
 
         sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, relatorio.id);
@@ -89,22 +82,5 @@ const prop = {
         res.json({ "msg": "Sucesso" })
     },
 };
-
-async function logReltorio(values, responsavel, id, motivo) {
-    try {
-        await PortalLog.create({
-            tabela_db: "portal_acessos",
-            chave_primaria: "id",
-            nome_chave: id,
-            registro_data: data_criacao,
-            registro_resp: responsavel,
-            motivo: motivo,
-            obs: `Orçamento: ${values.orcamento} Token: ${values.token}, Senha: ${values.senha}`
-        })
-    } catch (e) {
-        return false;
-    }
-    return true;
-}
 
 module.exports = prop;
