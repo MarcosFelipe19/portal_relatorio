@@ -1,7 +1,7 @@
 const { Sequelize, Op } = require('sequelize');
 const Proposta = require('../models/Proposta');
 const OsLab = require('../models/OsLab');
-const { sequelize } = require('../models/Proposta');
+
 const search = {
     async bucarProposta(orcamento) {
 
@@ -11,34 +11,44 @@ const search = {
         return result;
     },
     async buscarOrcamentos(req, res) {
+        if (!req.query.orcamento) {
+            return res.status(400).json({ "msg": "Sem orcamento" })
+        }
         try {
-            let page = +req.query.page;
-            let qtd = 20;
-            let start = (page - 1) * qtd
-
-            let orcamentos = await Proposta.findAll({
+            var orcamentos = await Proposta.findOne({
                 where: Sequelize.where(Sequelize.fn("CONCAT", Sequelize.col("codigo"), Sequelize.col("mes"), Sequelize.col("ano")), {
-                    [Op.like]: `${req.query.q}%`
-                }),
-                attributes: [[sequelize.fn('CONCAT', sequelize.col('codigo'),
-                    sequelize.col('mes'), sequelize.col('ano')), 'orcamento']],
-                order: [['Dataofe', 'DESC']],
-                offset: start, limit: 20
+                    [Op.eq]: req.query.orcamento
+                })
             });
-            // if (!req.query.orcamento) {
-            //     return res.status(400).json({ "msg": "Sem orcamento" })
-            // }
-            // let orcamentos = await Proposta.findOne({
-            //     where: Sequelize.where(Sequelize.fn("CONCAT", Sequelize.col("codigo"), Sequelize.col("mes"), Sequelize.col("ano")), {
-            //         [Op.eq]: req.query.orcamento
-            //     })
-            // });
             res.json(orcamentos)
         } catch (err) {
             console.log(err)
             res.json({ "msg": "Erro, Não foi possível fazer a busca!" })
         }
+
+
     },
+    // async buscarOrcamentos(req, res) {
+    //     try {
+    //         let page = +req.query.page;
+    //         let qtd = 5;
+    //         let start = (page - 1) * qtd
+
+    //         let orcamentos = await Proposta.findAll({
+    //             where: Sequelize.where(Sequelize.fn("CONCAT", Sequelize.col("codigo"), Sequelize.col("mes"), Sequelize.col("ano")), {
+    //                 [Op.like]: `${req.query.q}%`
+    //             }),
+    //             attributes: [[sequelize.fn('CONCAT', sequelize.col('codigo'),
+    //                 sequelize.col('mes'), sequelize.col('ano')), 'orcamento']],
+    //             order: [['Dataofe', 'DESC']],
+    //             offset: start, limit: 5
+    //         });
+    //         res.json(orcamentos)
+    //     } catch (err) {
+    //         console.log(err)
+    //         res.json({ "msg": "Erro, Não foi possível fazer a busca!" })
+    //     }
+    // },
     async buscarOs(req, res) {
         if (req.query.orcamento) {
             try {

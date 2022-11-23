@@ -1,7 +1,6 @@
 const Sequelize = require('sequelize');
 const dbConfig = require('../config/database');
 const dbConfigU83TI = require('../config/databaseU83TI');
-
 const Proposta = require('../models/Proposta');
 const Relatorio = require('../models/Relatorio');
 const PortalLog = require('../models/PortalLog');

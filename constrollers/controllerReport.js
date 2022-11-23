@@ -3,7 +3,6 @@ const portalrelatorio = require("./controllersPortalRelatorio");
 const Relatorio = require('../models/Relatorio');
 const PortalLog = require('../models/PortalLog');
 const date = require('./date');
-const { Sequelize } = require('sequelize');
 const { Op } = require('sequelize');
 const PortalRelatorio = require('../models/PortalRelatorio');
 const data_criacao = date.date_time;
@@ -42,17 +41,17 @@ const prop = {
 
         let sucesso = await logReltorio(relatorio, req.body.responsavel, relatorio.id, "NOVO RELATÓRIO");
 
-        if (sucesso) {
+        if (!sucesso) {
             return res.status(400).json(relatorio);
         }
 
         sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, relatorio.id);
 
-        if (sucesso) {
+        if (!sucesso) {
             return res.status(400).json(relatorio);
         }
 
-        res.status(200).json({ "msg": "Não foi possível " });
+        res.status(200).json(relatorio);
     },
     async getOne(req, res) {
         if (req.query.token && req.query.senha) {

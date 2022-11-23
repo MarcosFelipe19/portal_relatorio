@@ -1,14 +1,14 @@
-const {Model, DataTypes} = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 
 class OsLab extends Model {
-    static init(sequelize){
+    static init(sequelize) {
         super.init({
             orcamento: DataTypes.STRING(20),
             OS: DataTypes.STRING(15),
             token: DataTypes.STRING,
             senha: DataTypes.STRING,
             Laboratorio: {
-                type:DataTypes.STRING,
+                type: DataTypes.STRING,
                 primaryKey: true,
             },
             DataDirecionamento: DataTypes.DATE,
@@ -72,10 +72,10 @@ class OsLab extends Model {
             datacriacaoos: DataTypes.DATE,
             teste: DataTypes.STRING(45),
         },
-        {
-            sequelize,
-            tableName: "ordemservico_laboratorio"
-        })
+            {
+                sequelize,
+                tableName: "ordemservico_laboratorio"
+            })
     }
 }
 
