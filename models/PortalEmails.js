@@ -9,7 +9,12 @@ class PortalEmails extends Model {
                 allowNull: false,
                 autoIncrement: true,
             },
-            email: DataTypes.STRING(100),
+            email: {
+                type: DataTypes.STRING(100),
+                primaryKey: true,
+                allowNull: false,
+                autoIncrement: false,
+            },
             cod_cli: DataTypes.INTEGER(20),
         },
             {

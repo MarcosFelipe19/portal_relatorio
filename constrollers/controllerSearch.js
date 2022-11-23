@@ -15,7 +15,7 @@ const search = {
             return res.status(400).json({ "msg": "Sem orcamento" })
         }
         try {
-            var orcamentos = await Proposta.findOne({
+            var orcamentos = await Proposta.findAll({
                 where: Sequelize.where(Sequelize.fn("CONCAT", Sequelize.col("codigo"), Sequelize.col("mes"), Sequelize.col("ano")), {
                     [Op.eq]: req.query.orcamento
                 })
