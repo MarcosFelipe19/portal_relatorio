@@ -1,7 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
 
 class Clientes extends Model {
-    static init(connection) {
+    static init(sequelize) {
         super.init({
             CODCLI: {
                 type: DataTypes.INTEGER(10),
@@ -73,9 +73,51 @@ class Clientes extends Model {
             PEDAGIO: DataTypes.DOUBLE(15, 5),
             CUSTO: DataTypes.DOUBLE(15, 5),
             FONTE: DataTypes.STRING(2),
-            FRETE: DataTypes.IN
+            FRETE: DataTypes.INTEGER(5),
+            NFE: DataTypes.STRING(200),
+            CODMUN: DataTypes.INTEGER(10),
+            CODMUNC: DataTypes.INTEGER(10),
+            CODMUNE: DataTypes.INTEGER(10),
+            CODPAIS: DataTypes.INTEGER(10),
+            CODPAISC: DataTypes.INTEGER(10),
+            CODPAISE: DataTypes.INTEGER(10),
+            PAIS: DataTypes.STRING(100),
+            PAISC: DataTypes.STRING(100),
+            PAISE: DataTypes.STRING(100),
+            DTNFE: DataTypes.DATE,
+            TCOM: DataTypes.INTEGER(10),
+            TREC: DataTypes.INTEGER(10),
+            RG: DataTypes.STRING(15),
+            OBSFIN: DataTypes.TEXT,
+            UltimaAlteracao: DataTypes.DATE,
+            UsuarioAlteracao: DataTypes.STRING(50),
+            SituacaoCli: DataTypes.STRING(45),
+            senhaRoot: DataTypes.STRING,
+            Complemento: DataTypes.STRING,
+            ComplementoCob: DataTypes.STRING,
+            ComplementoEnt: DataTypes.STRING,
+            Banco: DataTypes.STRING,
+            Agencia: DataTypes.STRING,
+            ContaCorrente: DataTypes.STRING,
+            DREBOR: DataTypes.INTEGER(4),
+            comissao: DataTypes.DOUBLE(15, 5),
+            TipoCliente: DataTypes.STRING(45),
+            Limite: DataTypes.DOUBLE(15, 5),
+            ObsFat: DataTypes.STRING(200),
+            DescontoICMS: DataTypes.DOUBLE(15, 5),
+            DescontoPisCofins: DataTypes.DOUBLE(15, 5),
+            situacaoCadastro: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                primaryKey: false,
+                autoIncrement: false,
+            },
+            provedor: DataTypes.INTEGER(1),
+            LOJA: DataTypes.STRING(2),
+            ObsFinanceira: DataTypes.STRING(2000),
+            HOMOLOGADO: DataTypes.STRING(3),
         }, {
-            sequelize: connection,
+            sequelize,
             tableName: "clientes",
         })
     }
