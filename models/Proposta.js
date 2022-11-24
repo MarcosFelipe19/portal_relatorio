@@ -1,20 +1,20 @@
-const {Model, DataTypes} = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 
 class Proposta extends Model {
     static init(sequelize) {
         super.init({
             token: DataTypes.STRING(10),
             senha: DataTypes.STRING(5),
-            codigo:{
-                type:DataTypes.BIGINT(20),
+            codigo: {
+                type: DataTypes.BIGINT(20),
                 primaryKey: true,
             },
-            mes:{
-                type:DataTypes.STRING(2),
+            mes: {
+                type: DataTypes.STRING(2),
                 primaryKey: true,
             },
             ano: {
-                type:DataTypes.STRING(4),
+                type: DataTypes.STRING(4),
                 primaryKey: true,
             },
             Rev: DataTypes.INTEGER(11),
@@ -76,11 +76,11 @@ class Proposta extends Model {
             datafinanceiro_orc: DataTypes.DATE,
             responsavelfinanceiro_orc: DataTypes.STRING(45),
             cod_hipercusto: DataTypes.STRING,
-        },{
+        }, {
             sequelize,
             tableName: 'ordemservicocotacao_hc_copylab',
         })
     }
-} 
+}
 
 module.exports = Proposta;

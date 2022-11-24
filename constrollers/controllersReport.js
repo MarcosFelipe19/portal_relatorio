@@ -1,13 +1,13 @@
-const search = require('./controllerSearch');
+const search = require('./controllersSearch');
 const portalrelatorio = require("./controllersPortalRelatorio");
 const Relatorio = require('../models/Relatorio');
-const PortalLog = require('../models/PortalLog');
 const date = require('./date');
 const { Op } = require('sequelize');
 const data_criacao = date.date_time;
+const controlersSendEmail = require("./controllersSendEmail");
 const prop = {
     async novoRelatorio(req, res) {
-        if (!req.file || !req.body.orcamento || !req.body.responsavel || !req.body.upload_vencimento) {
+        if (!req.file || !req.body.orcamento || !req.body.responsavel || !req.body.upload_vencimento || !req.body.email || !req.body.nome_empresa) {
             return res.status(400).json({ "msg": "Error, Campos vazios não são permitidos!" });
         }
 
@@ -44,7 +44,13 @@ const prop = {
             return res.status(400).json(relatorio);
         }
 
-        res.status(200).json(relatorio);
+        let isEmail = await controlersSendEmail.enviarEmail(req.body.orcamento, relatorio.token, relatorio.senha, req.body.email, req.body.nome_empresa)
+
+        if (isEmail) {
+            res.json({ "msg": "Sucesso, Relatório gravado e enviado com sucesso" });
+        } else {
+            res.json({ "msg": "Sucesso, Relatório gravado, mas não foi possível enviar" })
+        }
     },
     async getOne(req, res) {
         if (req.query.token && req.query.senha) {
