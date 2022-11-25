@@ -20,7 +20,7 @@ const clientes = {
             return res.status(400).json({ "msg": "Error, não foi possível fazer a busca" })
         }
         try {
-            let cliente = await Clientes.findOne({ attributes: ['Fantasia'], where: { CODCLI: req.query.cod_cli } });
+            let cliente = await Clientes.findAll({ attributes: ['Fantasia'], where: { CODCLI: req.query.cod_cli } });
             res.json(cliente)
         } catch (error) {
             return await res.status(400).json({ "msg": "Error, não foi possível buscar o cliente" });
