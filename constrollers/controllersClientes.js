@@ -36,21 +36,6 @@ const clientes = {
         } catch (error) {
             return res.status(400).json({ "msg": "Error, não foi possível fazer a buscar" })
         }
-    },
-    async deletarEmail(req, res) {
-        if (!req.body.email || !req.body.cod_cli) {
-            return res.status(400).json({ "msg": "Error, campos vazios" });
-        }
-        try {
-            await PortalEmails.destroy({ where: { cod_cli: req.body.cod_cli, email: req.body.email } })
-            res.json({ "msg": "Sucesso, email deletado!" })
-        } catch (error) {
-            res.status(400).json({ "msg": "Error, não foi possível" })
-        }
-    },
-    async updateEmail(req, res) {
-        if (!req.body.email && !req.body.cod_cli) {
-
-        }
     }
+}
 module.exports = clientes;
