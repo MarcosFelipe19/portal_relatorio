@@ -37,22 +37,22 @@ const clientes = {
         }
     },
     async deletarEmail(req, res) {
-        if (!req.body.id) {
+        if (!req.query.id) {
             return res.status(400).json({ "msg": "Error, está faltando o id" });
         }
         try {
-            await PortalEmails.destroy({ where: { id: req.body.id } })
+            await PortalEmails.destroy({ where: { id: req.query.id } })
             res.json({ "msg": "Sucesso, email deletado!" })
         } catch (error) {
             res.status(400).json({ "msg": "Error, não foi possível detelar" })
         }
     },
     async updateEmail(req, res) {
-        if (req.body.id) {
+        if (req.query.id) {
             return res.status(400).json({ "msg": "Error, está faltando o id" });
         }
         try {
-            let email = await PortalEmails.update({ email: req.body.emailNovo }, { where: { id: req.body.id } })
+            let email = await PortalEmails.update({ email: req.query.emailNovo }, { where: { id: req.query.id } })
             return res.json({ email })
         } catch (error) {
             return res.status(400).json({ "msg": "Error, campos vazios" });
