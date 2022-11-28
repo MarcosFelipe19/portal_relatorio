@@ -15,6 +15,12 @@ class PortalEmails extends Model {
                 allowNull: false,
                 autoIncrement: false,
             },
+            id: {
+                type: DataTypes.INTEGER(8),
+                allowNull: false,
+                autoIncrement: true,
+                primaryKey: false,
+            }
         },
             {
                 sequelize,
