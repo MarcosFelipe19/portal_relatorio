@@ -53,7 +53,7 @@ const prop = {
             return res.status(400).json({ "msg": "Relatório gravado, mas não foi possível gravar as os!" })
         }
 
-        let isEmail = await controlersSendEmail.enviarEmail(req.body.orcamento, relatorio.token, relatorio.senha, req.body.emails, req.body.nome_empresa)
+        let isEmail = await controlersSendEmail.enviarEmail(req.body.orcamento, relatorio.token, relatorio.senha, req.body.emails, req.body.nome_empresa, relatorio.link_relatorio)
 
         if (isEmail) {
             res.json({ "msg": "Sucesso, Relatório gravado e enviado com sucesso" });
