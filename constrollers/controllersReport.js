@@ -40,14 +40,14 @@ const prop = {
             return res.status(400).json({ "msg": "Error, não foi possível cadastrar o relatório" });
         }
 
-        sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, relatorio.id);
+        let sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, relatorio.id);
 
         if (!sucesso) {
             relatorio.msg = "Error, Cadastre o upload";
             return res.status(400).json(relatorio);
         }
 
-        let sucesso = await controllersOs.cadastrarOs(req.body.orcamento, req.body.os, req.body.laboratorio)
+        sucesso = await controllersOs.cadastrarOs(req.body.orcamento, req.body.os, req.body.laboratorio)
 
         if (!sucesso) {
             return res.status(400).json({ "msg": "Relatório gravado, mas não foi possível gravar as os!" })
