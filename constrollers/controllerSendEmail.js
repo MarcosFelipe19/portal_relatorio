@@ -28,7 +28,6 @@ const sendEmail = {
             await transporter.sendMail({
                 from: user,
                 to: emails,
-                replyTo: email[1],
                 subject: `Cliente: ${nome_empresa} Orçamento: ${orcamento}`,
                 html: texto,
             })
