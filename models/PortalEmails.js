@@ -20,7 +20,7 @@ class PortalEmails extends Model {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: false,
-            }
+            },
         },
             {
                 sequelize,

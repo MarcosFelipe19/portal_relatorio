@@ -9,7 +9,7 @@ class Relatorio extends Model {
                 autoIncrement: true,
                 allowNull: false
             },
-            orcamento:{
+            orcamento: {
                 type: DataTypes.STRING,
                 primaryKey: true,
                 allowNull: false

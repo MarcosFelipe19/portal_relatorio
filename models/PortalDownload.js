@@ -1,9 +1,9 @@
-const {Model, DataTypes} = require("sequelize");
+const { Model, DataTypes } = require("sequelize");
 
 class PortalDownload extends Model {
-    static init(sequelize){
+    static init(sequelize) {
         super.init({
-            id:{
+            id: {
                 type: DataTypes.INTEGER,
                 primaryKey: true,
                 allowNull: false,
@@ -15,10 +15,10 @@ class PortalDownload extends Model {
             download_ip: DataTypes.STRING(20),
             download_localizacao: DataTypes.STRING(100)
         },
-        {
-            sequelize,
-            tableName: "portal_download",
-        }
+            {
+                sequelize,
+                tableName: "portal_download",
+            }
         )
     }
 }

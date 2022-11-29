@@ -1,11 +1,17 @@
 const nodemailer = require('nodemailer');
+const PortalEmails = require('../models/PortalEmails')
 require("dotenv").config();
 
 const sendEmail = {
     async enviarEmail(orcamento, token, senha, email, nome_empresa, link) {
-        if (!orcamento || !token || !senha || !email || !nome_empresa) {
-            console.log('teste');
+        if (!orcamento || !token || !senha || !email || !nome_empresa || !link || !cod_cli) {
+            return false;
         }
+        let emails = ""
+        for (let i = 0; i < email.length; i++) {
+            emails += email[i] + ", ";
+        }
+
         let user = process.env.USER;
         let pass = process.env.PASS;
         let texto = "<p>Prezado Clente,<br><br>Seus relatórios referente ao Orçamento: <storng>" + orcamento + "</strong> estão  disponíveis para fazer o download.<br><br>" +
@@ -21,7 +27,8 @@ const sendEmail = {
         try {
             await transporter.sendMail({
                 from: user,
-                to: email,
+                to: emails,
+                replyTo: email[1],
                 subject: `Cliente: ${nome_empresa} Orçamento: ${orcamento}`,
                 html: texto,
             })

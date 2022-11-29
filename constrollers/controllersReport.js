@@ -1,13 +1,15 @@
-const search = require('./controllersSearch');
+const search = require('./controllerSearch');
 const portalrelatorio = require("./controllersPortalRelatorio");
+const controllersOs = require('./controllersOs')
 const Relatorio = require('../models/Relatorio');
 const date = require('./date');
 const { Op } = require('sequelize');
 const data_criacao = date.date_time;
-const controlersSendEmail = require("./controllersSendEmail");
+const controlersSendEmail = require("./controllerSendEmail");
+const { request } = require('express');
 const prop = {
     async novoRelatorio(req, res) {
-        if (!req.file || !req.body.orcamento || !req.body.responsavel || !req.body.upload_vencimento || !req.body.email || !req.body.nome_empresa) {
+        if (!req.file || !req.body.orcamento || !req.body.responsavel || !req.body.upload_vencimento || !req.body.nome_empresa || !req.body.emails) {
             return res.status(400).json({ "msg": "Error, Campos vazios não são permitidos!" });
         }
 
@@ -41,7 +43,14 @@ const prop = {
         sucesso = await portalrelatorio.upload(req.body.orcamento, req.body.responsavel, relatorio.id);
 
         if (!sucesso) {
+            relatorio.msg = "Error, Cadastre o upload";
             return res.status(400).json(relatorio);
+        }
+
+        let sucesso = await controllersOs.cadastrarOs(req.body.orcamento, req.body.os, req.body.laboratorio)
+
+        if (!sucesso) {
+            return res.status(400).json({ "msg": "Relatório gravado, mas não foi possível gravar as os!" })
         }
 
         let isEmail = await controlersSendEmail.enviarEmail(req.body.orcamento, relatorio.token, relatorio.senha, req.body.email, req.body.nome_empresa)
