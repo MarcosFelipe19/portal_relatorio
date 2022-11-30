@@ -17,15 +17,15 @@ const os = {
         return true
     },
     buscarOs(req, res) {
-        if (!req.body.orcamento) {
-            res.status(400).json({ "msg": "Sem orcamento" })
+        if (!req.query.orcamento) {
+            return res.status(400).json({ "msg": "Sem orcamento" })
         }
 
-        PortalOs.findAll({ where: { orcamento: req.body.orcamento } })
+        PortalOs.findAll({ where: { orcamento: req.query.orcamento, laboratorio: req.query.laboratorio } })
             .then(data => {
-                res.json({ os: os })
+                return res.json(data)
             }).catch(err => {
-                res.status(400).json({ "msg": "Não foi possível fazer a busca" })
+                return res.status(400).json({ "msg": "Não foi possível fazer a busca" })
             })
     }
 }
