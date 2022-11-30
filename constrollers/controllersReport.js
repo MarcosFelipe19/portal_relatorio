@@ -1,11 +1,11 @@
-const search = require('./controllerSearch');
+const search = require('./controllersSearch');
 const portalrelatorio = require("./controllersPortalRelatorio");
 const controllersOs = require('./controllersOs')
 const Relatorio = require('../models/Relatorio');
 const date = require('./date');
 const { Op } = require('sequelize');
 const data_criacao = date.date_time;
-const controlersSendEmail = require("./controllerSendEmail");
+const controlersSendEmail = require("./controllersSendEmail");
 const { request } = require('express');
 const prop = {
     async novoRelatorio(req, res) {
@@ -68,7 +68,7 @@ const prop = {
                     where: {
                         token: req.query.token,
                         senha: req.query.senha,
-                        // data_vencimento: { [Op.gte]: date.date_time }
+                        data_vencimento: { [Op.gte]: date.date_time }
                     }
                 })
                 res.json(relatorio);

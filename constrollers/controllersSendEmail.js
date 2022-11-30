@@ -4,7 +4,7 @@ require("dotenv").config();
 
 const sendEmail = {
     async enviarEmail(orcamento, token, senha, emails, nome_empresa, link) {
-        if (!orcamento || !token || !senha || !email || !nome_empresa || !link) {
+        if (!orcamento || !token || !senha || !emails || !nome_empresa || !link) {
             return false;
         }
 

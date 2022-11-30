@@ -6,8 +6,9 @@ const os = {
         if (!orcamento || !os || !laboratorio) {
             return false
         }
+        let oss = os.split(",")
         try {
-            for (let i = 0; i < os.length; i++) {
+            for (let i = 0; i < oss.length; i++) {
                 await PortalOs.create({ orcamento, os: os[i], laboratorio, check: 1 })
             }
         } catch (e) {
