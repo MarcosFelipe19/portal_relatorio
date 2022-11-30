@@ -12,7 +12,6 @@ const prop = {
         if (!req.file || !req.body.orcamento || !req.body.responsavel || !req.body.upload_vencimento || !req.body.nome_empresa || !req.body.emails) {
             return res.status(400).json({ "msg": "Error, Campos vazios não são permitidos!" });
         }
-
         let result = "";
         try {
             result = await search.bucarProposta(req.body.orcamento);

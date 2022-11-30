@@ -6,6 +6,15 @@ const clientes = {
         if (!req.body.email || !req.body.cod_cli) {
             return res.status(400).json({ "msg": "Campos vazios não são permitidos!" })
         }
+        try {
+            let email = await PortalEmails.findOne({ where: { email: req.body.email, cod_cli: req.body.cod_cli } })
+
+            if (email) {
+                return res.status(400).json({ "msg": "Email já cadastrado" })
+            }
+        } catch (err) {
+            return res.status(500).json({ "msg": "Error mysql" })
+        }
 
         try {
             await PortalEmails.create({ email: req.body.email, cod_cli: req.body.cod_cli })

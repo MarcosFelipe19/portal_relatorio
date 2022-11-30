@@ -3,13 +3,9 @@ const PortalEmails = require('../models/PortalEmails')
 require("dotenv").config();
 
 const sendEmail = {
-    async enviarEmail(orcamento, token, senha, email, nome_empresa, link) {
+    async enviarEmail(orcamento, token, senha, emails, nome_empresa, link) {
         if (!orcamento || !token || !senha || !email || !nome_empresa || !link) {
             return false;
-        }
-        let emails = ""
-        for (let i = 0; i < email.length; i++) {
-            emails += email[i] + ", ";
         }
 
         let user = process.env.USER;
